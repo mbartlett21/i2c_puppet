@@ -29,7 +29,7 @@
 #define BIT_OBSERV_REST2	(2 << 6)
 #define BIT_OBSERV_REST3	(3 << 6)
 
-#define SWIPE_COOLDOWN_TIME_MS	100 // time to wait before generating a new swipe event
+#define SWIPE_COOLDOWN_TIME_MS	20 // time to wait before generating a new swipe event
 #define SWIPE_RELEASE_DELAY_MS	10  // time to wait before sending key release event
 #define MOTION_IS_SWIPE(i, j)	(((i >= 15) || (i <= -15)) && ((j >= -5) && (j <= 5)))
 
@@ -39,6 +39,8 @@ static struct
 {
 	struct touch_callback *callbacks;
 	uint32_t last_swipe_time;
+	int8_t xa;
+	int8_t ya;
 	i2c_inst_t *i2c;
 } self;
 
@@ -86,12 +88,22 @@ void touchpad_gpio_irq(uint gpio, uint32_t events)
 		y = ((y < 127) ? y : (y - 256));
 
 		if (keyboard_is_mod_on(KEY_MOD_ID_ALT)) {
+			self.xa += x;
+			self.ya += y;
 			if (to_ms_since_boot(get_absolute_time()) - self.last_swipe_time > SWIPE_COOLDOWN_TIME_MS) {
 				char key = '\0';
-				if (MOTION_IS_SWIPE(y, x)) {
-					key = (y < 0) ? KEY_JOY_UP : KEY_JOY_DOWN;
-				} else if (MOTION_IS_SWIPE(x, y)) {
-					key = (x < 0) ? KEY_JOY_LEFT : KEY_JOY_RIGHT;
+				if (self.ya < -20) {
+					key = KEY_JOY_UP;
+					self.ya += 20;
+				} else if (self.ya > 20) {
+					key = KEY_JOY_DOWN;
+					self.ya -= 20;
+				} else if (self.xa < -20) {
+					key = KEY_JOY_LEFT;
+					self.xa += 20;
+				} else if (self.xa > 20) {
+					key = KEY_JOY_RIGHT;
+					self.xa -= 20;
 				}
 
 				if (key != '\0') {
@@ -104,6 +116,8 @@ void touchpad_gpio_irq(uint gpio, uint32_t events)
 				}
 			}
 		} else {
+			self.xa = 0;
+			self.ya = 0;
 			if (self.callbacks) {
 				struct touch_callback *cb = self.callbacks;
 
