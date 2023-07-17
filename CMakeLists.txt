@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.13)
 set(PICO_PLATFORM "rp2040")
 set(PICO_BOARD_HEADER_DIRS ${CMAKE_CURRENT_LIST_DIR}/boards)
 
-include(3rdparty/pico-sdk/pico_sdk_init.cmake)
+include(pico_sdk_import.cmake)
 
 project(i2c_puppet)
 
