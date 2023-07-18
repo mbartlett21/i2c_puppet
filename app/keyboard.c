@@ -162,9 +162,9 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 								} else if (shift) {
 									key = '^';
 								} else if (control) {
-									key = 'x'; // TODO
-								} else {
 									key = '\\';
+								} else { // nothing
+									key = '\0';
 								}
 								break;
 							default:
