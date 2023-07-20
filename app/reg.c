@@ -60,22 +60,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 		}
 		break;
 	}
-
-	// special R/W registers
-	case REG_ID_DIR: // gpio direction
-	{
-		if (is_write) {
-			switch (reg) {
-			case REG_ID_DIR:
-				gpioexp_update_dir(in_data);
-				break;
-			}
-		} else {
-			out_buffer[0] = reg_get_value(reg);
-			*out_len = sizeof(uint8_t);
-		}
-		break;
-	}
 	}
 }
 

@@ -33,8 +33,6 @@ int main(void)
 
 	backlight_init();
 
-	gpioexp_init();
-
 	keyboard_init();
 
 	touchpad_init();
