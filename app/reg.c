@@ -84,10 +84,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 		}
 		break;
 	}
-
-	case REG_ID_RST:
-		NVIC_SystemReset();
-		break;
 	}
 }
 

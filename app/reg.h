@@ -9,7 +9,6 @@ enum reg_id
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
 	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
-	REG_ID_RST = 0x08, // trigger a reset
 	REG_ID_DIR = 0x0B, // gpio direction
 	REG_ID_PUE = 0x0C, // gpio input pull enable
 	REG_ID_PUD = 0x0D, // gpio input pull direction (0xff = 255)
