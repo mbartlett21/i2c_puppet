@@ -5,7 +5,6 @@
 
 enum reg_id
 {
-	REG_ID_VER = 0x01, // fw version
 	REG_ID_CFG = 0x02, // config
 	REG_ID_INT = 0x03, // interrupt status
 	REG_ID_KEY = 0x04, // key status

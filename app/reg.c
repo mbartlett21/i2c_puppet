@@ -123,11 +123,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 		reg_set_value(reg, 0);
 		break;
 
-	case REG_ID_VER:
-		out_buffer[0] = VER_VAL;
-		*out_len = sizeof(uint8_t);
-		break;
-
 	case REG_ID_KEY:
 		out_buffer[0] = fifo_count();
 		out_buffer[0] |= keyboard_get_numlock()  ? KEY_NUMLOCK  : 0x00;
