@@ -24,8 +24,6 @@ enum reg_id
 	REG_ID_ADR = 0x12, // i2c puppet address (0x1f)
 	REG_ID_IND = 0x13, // interrupt pin assert duration (ms) (1)
 	REG_ID_CF2 = 0x14, // config 2 (CF2_TOUCH_INT | CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)
-	REG_ID_TOX = 0x15, // touch delta x since last read, at most (-128 to 127)
-	REG_ID_TOY = 0x16, // touch delta y since last read, at most (-128 to 127)
 
 	REG_ID_LAST,
 };

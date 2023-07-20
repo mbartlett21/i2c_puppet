@@ -20,17 +20,6 @@ static struct
 	uint8_t regs[REG_ID_LAST];
 } self;
 
-static void touch_cb(int8_t x, int8_t y)
-{
-	const int16_t dx = (int8_t)self.regs[REG_ID_TOX] + x;
-	const int16_t dy = (int8_t)self.regs[REG_ID_TOY] + y;
-
-	// bind to -128 to 127
-	self.regs[REG_ID_TOX] = MAX(INT8_MIN, MIN(dx, INT8_MAX));
-	self.regs[REG_ID_TOY] = MAX(INT8_MIN, MIN(dy, INT8_MAX));
-}
-static struct touch_callback touch_callback = { .func = touch_cb };
-
 void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, uint8_t *out_len)
 {
 	const bool is_write = (in_reg & PACKET_WRITE_MASK);
@@ -115,14 +104,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 	}
 
 	// read-only registers
-	case REG_ID_TOX:
-	case REG_ID_TOY:
-		out_buffer[0] = reg_get_value(reg);
-		*out_len = sizeof(uint8_t);
-
-		reg_set_value(reg, 0);
-		break;
-
 	case REG_ID_KEY:
 		out_buffer[0] = fifo_count();
 		out_buffer[0] |= keyboard_get_numlock()  ? KEY_NUMLOCK  : 0x00;
@@ -195,6 +176,4 @@ void reg_init(void)
 	reg_set_value(REG_ID_ADR, 0x1F);
 	reg_set_value(REG_ID_IND, 1);	// ms
 	reg_set_value(REG_ID_CF2, CF2_TOUCH_INT | CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON);
-
-	touchpad_add_touch_callback(&touch_callback);
 }
