@@ -3,7 +3,6 @@ add_executable(i2c_puppet
 	debug.c
 	gpioexp.c
 	puppet_i2c.c
-	interrupt.c
 	keyboard.c
 	main.c
 	reg.c

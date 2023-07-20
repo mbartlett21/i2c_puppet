@@ -32,16 +32,12 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 
 	// common R/W registers
 	case REG_ID_CFG:
-	case REG_ID_INT:
 	case REG_ID_DEB:
 	case REG_ID_FRQ:
 	case REG_ID_BKL:
 	case REG_ID_BK2:
-	case REG_ID_GIC:
-	case REG_ID_GIN:
 	case REG_ID_HLD:
 	case REG_ID_ADR:
-	case REG_ID_IND:
 	case REG_ID_CF2:
 	{
 		if (is_write) {
@@ -147,7 +143,7 @@ void reg_clear_bit(enum reg_id reg, uint8_t bit)
 
 void reg_init(void)
 {
-	reg_set_value(REG_ID_CFG, CFG_KEY_INT | CFG_USE_MODS);
+	reg_set_value(REG_ID_CFG, CFG_USE_MODS);
 	reg_set_value(REG_ID_BKL, 255);
 	reg_set_value(REG_ID_DEB, 10);
 	reg_set_value(REG_ID_FRQ, 10);	// ms
@@ -155,6 +151,5 @@ void reg_init(void)
 	reg_set_value(REG_ID_PUD, 0xFF);
 	reg_set_value(REG_ID_HLD, 30);	// 10ms units
 	reg_set_value(REG_ID_ADR, 0x1F);
-	reg_set_value(REG_ID_IND, 1);	// ms
-	reg_set_value(REG_ID_CF2, CF2_TOUCH_INT | CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON);
+	reg_set_value(REG_ID_CF2, CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON);
 }

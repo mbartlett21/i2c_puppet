@@ -5,8 +5,7 @@
 
 enum reg_id
 {
-	REG_ID_CFG = 0x02, // config (CFG_KEY_INT | CFG_USE_MODS) (0b10010000)
-	REG_ID_INT = 0x03, // interrupt status
+	REG_ID_CFG = 0x02, // config (CFG_USE_MODS) (0b10010000)
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
 	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
@@ -16,36 +15,19 @@ enum reg_id
 	REG_ID_PUE = 0x0C, // gpio input pull enable
 	REG_ID_PUD = 0x0D, // gpio input pull direction (0xff = 255)
 	REG_ID_GIO = 0x0E, // gpio value
-	REG_ID_GIC = 0x0F, // gpio interrupt config
-	REG_ID_GIN = 0x10, // gpio interrupt status
 	REG_ID_HLD = 0x11, // key hold time cfg (in 10ms units) (30)
 	REG_ID_ADR = 0x12, // i2c puppet address (0x1f)
-	REG_ID_IND = 0x13, // interrupt pin assert duration (ms) (1)
-	REG_ID_CF2 = 0x14, // config 2 (CF2_TOUCH_INT | CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)
+	REG_ID_CF2 = 0x14, // config 2 (CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)
 
 	REG_ID_LAST,
 };
 
-#define CFG_CAPSLOCK_INT	(1 << 2) // Should toggling caps lock generate interrupts
-#define CFG_NUMLOCK_INT		(1 << 3) // Should toggling num lock generate interrupts
-#define CFG_KEY_INT			(1 << 4) // Should key events generate interrupts
-#define CFG_PANIC_INT		(1 << 5) // Not implemented
 #define CFG_REPORT_MODS		(1 << 6) // Should Alt, Sym and Shifts be reported as well
 #define CFG_USE_MODS		(1 << 7) // Should Alt, Sym and Shifts modify the keys reported
 
-#define CF2_TOUCH_INT		(1 << 0) // Should touch events generate interrupts
 #define CF2_USB_KEYB_ON		(1 << 1) // Should key events be sent over USB HID
 #define CF2_USB_MOUSE_ON	(1 << 2) // Should touch events be sent over USB HID
 // TODO? CF2_STICKY_MODS // Pressing and releasing a mod affects next key pressed
-
-#define INT_OVERFLOW		(1 << 0)
-#define INT_CAPSLOCK		(1 << 1)
-#define INT_NUMLOCK			(1 << 2)
-#define INT_KEY				(1 << 3)
-#define INT_PANIC			(1 << 4)
-#define INT_GPIO			(1 << 5)
-#define INT_TOUCH			(1 << 6)
-// Future me: If we need more INT_*, add a INT2 and use (1 << 7) here as indicator that the info is in INT2
 
 #define KEY_CAPSLOCK		(1 << 5) // Caps lock status
 #define KEY_NUMLOCK			(1 << 6) // Num lock status

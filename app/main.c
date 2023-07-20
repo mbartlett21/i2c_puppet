@@ -5,7 +5,6 @@
 #include "backlight.h"
 #include "debug.h"
 #include "gpioexp.h"
-#include "interrupt.h"
 #include "keyboard.h"
 #include "puppet_i2c.h"
 #include "reg.h"
@@ -39,8 +38,6 @@ int main(void)
 	keyboard_init();
 
 	touchpad_init();
-
-	interrupt_init();
 
 	puppet_i2c_init();
 
