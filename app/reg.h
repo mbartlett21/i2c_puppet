@@ -13,7 +13,6 @@ enum reg_id
 	REG_ID_DIR = 0x0B, // gpio direction
 	REG_ID_PUE = 0x0C, // gpio input pull enable
 	REG_ID_PUD = 0x0D, // gpio input pull direction (0xff = 255)
-	REG_ID_GIO = 0x0E, // gpio value
 	REG_ID_HLD = 0x11, // key hold time cfg (in 10ms units) (30)
 	REG_ID_ADR = 0x12, // i2c puppet address (0x1f)
 	REG_ID_CF2 = 0x14, // config 2 (CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)

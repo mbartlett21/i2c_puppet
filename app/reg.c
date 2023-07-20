@@ -85,17 +85,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 		break;
 	}
 
-	case REG_ID_GIO: // gpio value
-	{
-		if (is_write) {
-			gpioexp_set_value(in_data);
-		} else {
-			out_buffer[0] = gpioexp_get_value();
-			*out_len = sizeof(uint8_t);
-		}
-		break;
-	}
-
 	case REG_ID_RST:
 		NVIC_SystemReset();
 		break;
