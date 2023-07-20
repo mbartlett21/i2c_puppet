@@ -2,7 +2,6 @@
 
 #include "app_config.h"
 #include "backlight.h"
-#include "gpioexp.h"
 #include "puppet_i2c.h"
 #include "keyboard.h"
 #include "touchpad.h"

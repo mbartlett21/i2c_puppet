@@ -1,7 +1,6 @@
 #include "debug.h"
 
 #include "app_config.h"
-#include "gpioexp.h"
 #include "keyboard.h"
 #include "reg.h"
 #include "touchpad.h"
@@ -34,12 +33,6 @@ static void touch_cb(int8_t x, int8_t y)
 	printf("%s: x: %d, y: %d !\r\n", __func__, x, y);
 }
 static struct touch_callback touch_callback = { .func = touch_cb };
-
-static void gpioexp_cb(uint8_t gpio, uint8_t gpio_idx)
-{
-	printf("gpioexp, pin: %d, idx: %d\r\n", gpio, gpio_idx);
-}
-static struct gpioexp_callback gpioexp_callback = { .func = gpioexp_cb };
 
 // copied from pico_stdio_usb in the SDK
 static void usb_out_chars(const char *buf, int length)
@@ -101,6 +94,4 @@ void debug_init(void)
 	keyboard_add_lock_callback(&key_lock_callback);
 
 	touchpad_add_touch_callback(&touch_callback);
-
-	gpioexp_add_int_callback(&gpioexp_callback);
 }

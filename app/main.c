@@ -4,7 +4,6 @@
 
 #include "backlight.h"
 #include "debug.h"
-#include "gpioexp.h"
 #include "keyboard.h"
 #include "puppet_i2c.h"
 #include "reg.h"
@@ -16,7 +15,6 @@ static void gpio_irq(uint gpio, uint32_t events)
 {
 //	printf("%s: gpio %d, events 0x%02X\r\n", __func__, gpio, events);
 	touchpad_gpio_irq(gpio, events);
-	gpioexp_gpio_irq(gpio, events);
 }
 
 // TODO: Microphone

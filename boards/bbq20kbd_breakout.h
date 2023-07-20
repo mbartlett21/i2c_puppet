@@ -41,11 +41,5 @@
 #define BTN_KEYS \
 	{ KEY_BTN_RIGHT2 },
 
-#define PIN_GPIOEXP0		15
-#define PIN_GPIOEXP1		17
-#define PIN_GPIOEXP2		19
-#define PIN_GPIOEXP3		21
-#define PIN_GPIOEXP4		26
-
 #define PICO_DEFAULT_UART			1
 #define PICO_DEFAULT_UART_TX_PIN	20
