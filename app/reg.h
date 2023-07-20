@@ -5,14 +5,12 @@
 
 enum reg_id
 {
-	REG_ID_CFG = 0x02, // config
+	REG_ID_CFG = 0x02, // config (CFG_KEY_INT | CFG_USE_MODS) (0b10010000)
 	REG_ID_INT = 0x03, // interrupt status
-	REG_ID_KEY = 0x04, // key status
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
 	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
 	REG_ID_RST = 0x08, // trigger a reset
-	REG_ID_FIF = 0x09, // key fifo
 	REG_ID_BK2 = 0x0A, // backlight 2 (255)
 	REG_ID_DIR = 0x0B, // gpio direction
 	REG_ID_PUE = 0x0C, // gpio input pull enable
@@ -28,8 +26,6 @@ enum reg_id
 	REG_ID_LAST,
 };
 
-#define CFG_OVERFLOW_ON		(1 << 0) // Should new FIFO entries overwrite oldest ones if FIFO is full
-#define CFG_OVERFLOW_INT	(1 << 1) // Should FIFO overflow generate an interrupt
 #define CFG_CAPSLOCK_INT	(1 << 2) // Should toggling caps lock generate interrupts
 #define CFG_NUMLOCK_INT		(1 << 3) // Should toggling num lock generate interrupts
 #define CFG_KEY_INT			(1 << 4) // Should key events generate interrupts

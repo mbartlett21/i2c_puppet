@@ -1,5 +1,4 @@
 #include "app_config.h"
-#include "fifo.h"
 #include "keyboard.h"
 #include "reg.h"
 #include <stdio.h>
@@ -363,15 +362,6 @@ static int64_t timer_task(alarm_id_t id, void *user_data)
 
 void keyboard_inject_event(char key, enum key_state state)
 {
-	const struct fifo_item item = { key, state };
-	if (!fifo_enqueue(item)) {
-		if (reg_is_bit_set(REG_ID_CFG, CFG_OVERFLOW_INT))
-			reg_set_bit(REG_ID_INT, INT_OVERFLOW);
-
-		if (reg_is_bit_set(REG_ID_CFG, CFG_OVERFLOW_ON))
-			fifo_enqueue_force(item);
-	}
-
 	struct key_callback *cb = self.key_callbacks;
 	while (cb) {
 		cb->func(key, state);

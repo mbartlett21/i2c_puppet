@@ -2,7 +2,6 @@
 
 #include "app_config.h"
 #include "backlight.h"
-#include "fifo.h"
 #include "gpioexp.h"
 #include "puppet_i2c.h"
 #include "keyboard.h"
@@ -103,24 +102,6 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 		break;
 	}
 
-	// read-only registers
-	case REG_ID_KEY:
-		out_buffer[0] = fifo_count();
-		out_buffer[0] |= keyboard_get_numlock()  ? KEY_NUMLOCK  : 0x00;
-		out_buffer[0] |= keyboard_get_capslock() ? KEY_CAPSLOCK : 0x00;
-		*out_len = sizeof(uint8_t);
-		break;
-
-	case REG_ID_FIF:
-	{
-		const struct fifo_item item = fifo_dequeue();
-
-		out_buffer[0] = (uint8_t)item.state;
-		out_buffer[1] = (uint8_t)item.key;
-		*out_len = sizeof(uint8_t) * 2;
-		break;
-	}
-
 	case REG_ID_RST:
 		NVIC_SystemReset();
 		break;
@@ -166,7 +147,7 @@ void reg_clear_bit(enum reg_id reg, uint8_t bit)
 
 void reg_init(void)
 {
-	reg_set_value(REG_ID_CFG, CFG_OVERFLOW_INT | CFG_KEY_INT | CFG_USE_MODS);
+	reg_set_value(REG_ID_CFG, CFG_KEY_INT | CFG_USE_MODS);
 	reg_set_value(REG_ID_BKL, 255);
 	reg_set_value(REG_ID_DEB, 10);
 	reg_set_value(REG_ID_FRQ, 10);	// ms
