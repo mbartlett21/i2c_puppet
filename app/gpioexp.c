@@ -18,8 +18,8 @@ static void set_dir(uint8_t gpio, uint8_t gpio_idx, uint8_t dir)
 	gpio_init(gpio);
 
 	if (dir == DIR_INPUT) {
-		if (reg_is_bit_set(REG_ID_PUE, (1 << gpio_idx))) {
-			if (reg_is_bit_set(REG_ID_PUD, (1 << gpio_idx)) == PUD_UP) {
+		if (0) {
+			if (0) {
 				gpio_is_pulled_up(gpio);
 			} else {
 				gpio_is_pulled_down(gpio);
@@ -127,54 +127,6 @@ void gpioexp_update_dir(uint8_t new_dir)
 #endif
 #ifdef PIN_GPIOEXP7
 	UPDATE_DIR(7)
-#endif
-}
-
-void gpioexp_update_pue_pud(uint8_t new_pue, uint8_t new_pud)
-{
-#ifndef NDEBUG
-	printf("%s: pue: 0x%02X, pud: 0x%02X\r\n", __func__, new_pue, new_pud);
-#endif
-
-	const uint8_t old_pue = reg_get_value(REG_ID_PUE);
-	const uint8_t old_pud = reg_get_value(REG_ID_PUD);
-
-	// Shut up warnings in case no GPIOs configured
-	(void)old_pue;
-	(void)old_pud;
-
-	reg_set_value(REG_ID_PUE, new_pue);
-	reg_set_value(REG_ID_PUD, new_pud);
-
-#define UPDATE_PULL(bit) \
-	if (((old_pue & (1 << bit)) != (new_pue & (1 << bit))) || \
-		((old_pud & (1 << bit)) != (new_pud & (1 << bit)))) { \
-		set_dir(PIN_GPIOEXP ## bit, bit, reg_is_bit_set(REG_ID_DIR, (1 << bit))); \
-	}
-
-#ifdef PIN_GPIOEXP0
-	UPDATE_PULL(0)
-#endif
-#ifdef PIN_GPIOEXP1
-	UPDATE_PULL(1)
-#endif
-#ifdef PIN_GPIOEXP2
-	UPDATE_PULL(2)
-#endif
-#ifdef PIN_GPIOEXP3
-	UPDATE_PULL(3)
-#endif
-#ifdef PIN_GPIOEXP4
-	UPDATE_PULL(4)
-#endif
-#ifdef PIN_GPIOEXP5
-	UPDATE_PULL(5)
-#endif
-#ifdef PIN_GPIOEXP6
-	UPDATE_PULL(6)
-#endif
-#ifdef PIN_GPIOEXP7
-	UPDATE_PULL(7)
 #endif
 }
 

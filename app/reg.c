@@ -63,19 +63,11 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 
 	// special R/W registers
 	case REG_ID_DIR: // gpio direction
-	case REG_ID_PUE: // gpio input pull enable
-	case REG_ID_PUD: // gpio input pull direction
 	{
 		if (is_write) {
 			switch (reg) {
 			case REG_ID_DIR:
 				gpioexp_update_dir(in_data);
-				break;
-			case REG_ID_PUE:
-				gpioexp_update_pue_pud(in_data, reg_get_value(REG_ID_PUD));
-				break;
-			case REG_ID_PUD:
-				gpioexp_update_pue_pud(reg_get_value(REG_ID_PUE), in_data);
 				break;
 			}
 		} else {
@@ -130,7 +122,6 @@ void reg_init(void)
 	reg_set_value(REG_ID_BKL, 255);
 	reg_set_value(REG_ID_DEB, 10);
 	reg_set_value(REG_ID_FRQ, 10);	// ms
-	reg_set_value(REG_ID_PUD, 0xFF);
 	reg_set_value(REG_ID_HLD, 30);	// 10ms units
 	reg_set_value(REG_ID_ADR, 0x1F);
 	reg_set_value(REG_ID_CF2, CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON);
