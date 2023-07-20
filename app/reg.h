@@ -9,22 +9,22 @@ enum reg_id
 	REG_ID_CFG = 0x02, // config
 	REG_ID_INT = 0x03, // interrupt status
 	REG_ID_KEY = 0x04, // key status
-	REG_ID_BKL = 0x05, // backlight
-	REG_ID_DEB = 0x06, // key debounce cfg (not implemented)
-	REG_ID_FRQ = 0x07, // key poll freq cfg
+	REG_ID_BKL = 0x05, // backlight (255)
+	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
+	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
 	REG_ID_RST = 0x08, // trigger a reset
 	REG_ID_FIF = 0x09, // key fifo
-	REG_ID_BK2 = 0x0A, // backlight 2
+	REG_ID_BK2 = 0x0A, // backlight 2 (255)
 	REG_ID_DIR = 0x0B, // gpio direction
 	REG_ID_PUE = 0x0C, // gpio input pull enable
-	REG_ID_PUD = 0x0D, // gpio input pull direction
+	REG_ID_PUD = 0x0D, // gpio input pull direction (0xff = 255)
 	REG_ID_GIO = 0x0E, // gpio value
 	REG_ID_GIC = 0x0F, // gpio interrupt config
 	REG_ID_GIN = 0x10, // gpio interrupt status
-	REG_ID_HLD = 0x11, // key hold time cfg (in 10ms units)
-	REG_ID_ADR = 0x12, // i2c puppet address
-	REG_ID_IND = 0x13, // interrupt pin assert duration
-	REG_ID_CF2 = 0x14, // config 2
+	REG_ID_HLD = 0x11, // key hold time cfg (in 10ms units) (30)
+	REG_ID_ADR = 0x12, // i2c puppet address (0x1f)
+	REG_ID_IND = 0x13, // interrupt pin assert duration (ms) (1)
+	REG_ID_CF2 = 0x14, // config 2 (CF2_TOUCH_INT | CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)
 	REG_ID_TOX = 0x15, // touch delta x since last read, at most (-128 to 127)
 	REG_ID_TOY = 0x16, // touch delta y since last read, at most (-128 to 127)
 
