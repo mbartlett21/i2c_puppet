@@ -39,8 +39,8 @@ static struct
 {
 	struct touch_callback *callbacks;
 	uint32_t last_swipe_time;
-	int8_t xa;
-	int8_t ya;
+	int16_t xa;
+	int16_t ya;
 	i2c_inst_t *i2c;
 } self;
 
@@ -81,8 +81,8 @@ void touchpad_gpio_irq(uint gpio, uint32_t events)
 
 	const uint8_t motion = read_register8(REG_MOTION);
 	if (motion & BIT_MOTION_MOT) {
-		int8_t x = read_register8(REG_DELTA_X);
-		int8_t y = read_register8(REG_DELTA_Y);
+		int16_t x = read_register8(REG_DELTA_X);
+		int16_t y = read_register8(REG_DELTA_Y);
 
 		x = ((x < 127) ? x : (x - 256)) * -1;
 		y = ((y < 127) ? y : (y - 256));
