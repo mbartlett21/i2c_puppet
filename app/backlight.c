@@ -3,11 +3,6 @@
 #include <hardware/pwm.h>
 #include <pico/stdlib.h>
 
-void backlight_sync(void)
-{
-	pwm_set_gpio_level(PIN_BKL, 255 * 0x80);
-}
-
 void backlight_init(void)
 {
 	gpio_set_function(PIN_BKL, GPIO_FUNC_PWM);
@@ -17,5 +12,5 @@ void backlight_init(void)
 	pwm_config config = pwm_get_default_config();
 	pwm_init(slice_num, &config, true);
 
-	backlight_sync();
+	pwm_set_gpio_level(PIN_BKL, 255 * 0x80);
 }
