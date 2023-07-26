@@ -1,7 +1,6 @@
 add_executable(i2c_puppet
 	backlight.c
 	debug.c
-	puppet_i2c.c
 	keyboard.c
 	main.c
 	reg.c

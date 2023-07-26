@@ -4,6 +4,7 @@
 #define USB_PID				0xB182
 #define USB_PRODUCT			"BBQ20KBD"
 
+// #define PIN_INT				0
 #define PIN_BKL				25
 
 #define PIN_SDA				18

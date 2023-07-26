@@ -5,7 +5,6 @@
 #include "backlight.h"
 #include "debug.h"
 #include "keyboard.h"
-#include "puppet_i2c.h"
 #include "reg.h"
 #include "touchpad.h"
 #include "usb.h"
@@ -34,8 +33,6 @@ int main(void)
 	keyboard_init();
 
 	touchpad_init();
-
-	puppet_i2c_init();
 
 	// For now, the `gpio` param is ignored and all enabled GPIOs generate the irq
 	gpio_set_irq_enabled_with_callback(0xFF, 0, true, &gpio_irq);
