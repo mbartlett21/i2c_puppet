@@ -5,7 +5,6 @@
 
 enum reg_id
 {
-	REG_ID_CFG = 0x02, // config (CFG_USE_MODS) (0b10010000)
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
 	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
@@ -13,9 +12,6 @@ enum reg_id
 
 	REG_ID_LAST,
 };
-
-#define CFG_REPORT_MODS		(1 << 6) // Should Alt, Sym and Shifts be reported as well
-#define CFG_USE_MODS		(1 << 7) // Should Alt, Sym and Shifts modify the keys reported
 
 #define CF2_USB_KEYB_ON		(1 << 1) // Should key events be sent over USB HID
 #define CF2_USB_MOUSE_ON	(1 << 2) // Should touch events be sent over USB HID

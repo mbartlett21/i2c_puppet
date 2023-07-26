@@ -90,28 +90,28 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 		char key = p_entry->chr;
 		switch (p_entry->mod) {
 			case KEY_MOD_ID_ALT:
-				if (reg_is_bit_set(REG_ID_CFG, CFG_REPORT_MODS))
+				if (REPORT_MODS)
 					key = KEY_MOD_ALT;
 				break;
 
 			case KEY_MOD_ID_SHL:
-				if (reg_is_bit_set(REG_ID_CFG, CFG_REPORT_MODS))
+				if (REPORT_MODS)
 					key = KEY_MOD_SHL;
 				break;
 
 			case KEY_MOD_ID_SHR:
-				if (reg_is_bit_set(REG_ID_CFG, CFG_REPORT_MODS))
+				if (REPORT_MODS)
 					key = KEY_MOD_SHR;
 				break;
 
 			case KEY_MOD_ID_SYM:
-				if (reg_is_bit_set(REG_ID_CFG, CFG_REPORT_MODS))
+				if (REPORT_MODS)
 					key = KEY_MOD_SYM;
 				break;
 
 			default:
 			{
-				if (reg_is_bit_set(REG_ID_CFG, CFG_USE_MODS)) {
+				if (USE_MODS) {
 					const bool shift = (self.mods[KEY_MOD_ID_SHL] || self.mods[KEY_MOD_ID_SHR]) | self.capslock;
 					const bool alt = self.mods[KEY_MOD_ID_ALT] | self.numlock;
 					const bool is_button = ((key == KEY_BTN_RIGHT1)

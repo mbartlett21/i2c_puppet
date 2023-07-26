@@ -47,6 +47,10 @@ enum key_mod
 // How long to hold the click to get right click
 #define KEY_HLD_MS 300
 
+#define REPORT_MODS true // Should Alt, Sym and Shifts be reported as well
+
+#define USE_MODS true // Should Alt, Sym and Shifts modify the keys reported
+
 struct key_callback
 {
 	void (*func)(char, enum key_state);
