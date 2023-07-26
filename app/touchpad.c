@@ -94,19 +94,21 @@ void touchpad_gpio_irq(uint gpio, uint32_t events)
 
 			if (to_ms_since_boot(get_absolute_time()) - self.last_swipe_time > SWIPE_COOLDOWN_TIME_MS) {
 				char key = '\0';
-				if (self.ya < -25) {
+				if (self.ya < -20) {
 					key = KEY_JOY_UP;
-				} else if (self.ya > 25) {
+					self.ya += 20;
+				} else if (self.ya > 20) {
 					key = KEY_JOY_DOWN;
-				} else if (self.xa < -25) {
+					self.ya -= 20;
+				} else if (self.xa < -20) {
 					key = KEY_JOY_LEFT;
-				} else if (self.xa > 25) {
+					self.xa += 20;
+				} else if (self.xa > 20) {
 					key = KEY_JOY_RIGHT;
+					self.xa -= 20;
 				}
 
 				if (key != '\0') {
-					self.xa = 0;
-					self.ya = 0;
 					keyboard_inject_event(key, KEY_STATE_PRESSED);
 
 					// we need to allow the usb a bit of time to send the press, so schedule the release after a bit
