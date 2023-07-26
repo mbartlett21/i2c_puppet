@@ -24,35 +24,15 @@ void reg_process_packet(uint8_t in_reg, uint8_t in_data, uint8_t *out_buffer, ui
 
 //	printf("read complete, is_write: %d, reg: 0x%02X\r\n", is_write, reg);
 
-	*out_len = 0;
+	if (is_write) {
+		*out_len = 0;
+		reg_set_value(reg, in_data);
 
-	switch (reg) {
-
-	// common R/W registers
-	case REG_ID_CFG:
-	case REG_ID_DEB:
-	case REG_ID_FRQ:
-	case REG_ID_BKL:
-	case REG_ID_HLD:
-	case REG_ID_CF2:
-	{
-		if (is_write) {
-			reg_set_value(reg, in_data);
-
-			switch (reg) {
-			case REG_ID_BKL:
-				backlight_sync();
-				break;
-
-			default:
-				break;
-			}
-		} else {
-			out_buffer[0] = reg_get_value(reg);
-			*out_len = sizeof(uint8_t);
-		}
-		break;
-	}
+		if (reg == REG_ID_BKL)
+			backlight_sync();
+	} else {
+		out_buffer[0] = reg_get_value(reg);
+		*out_len = sizeof(uint8_t);
 	}
 }
 
