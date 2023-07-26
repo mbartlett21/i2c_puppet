@@ -247,7 +247,7 @@ static void next_item_state(struct list_item * const p_item, const bool pressed)
 			break;
 
 		case KEY_STATE_PRESSED:
-			if ((to_ms_since_boot(get_absolute_time()) - p_item->hold_start_time) > (reg_get_value(REG_ID_HLD) * 10)) {
+			if ((to_ms_since_boot(get_absolute_time()) - p_item->hold_start_time) > KEY_HLD_MS) {
 				transition_to(p_item, KEY_STATE_HOLD);
 			 } else if(!pressed) {
 				transition_to(p_item, KEY_STATE_RELEASED);

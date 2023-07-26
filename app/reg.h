@@ -9,7 +9,6 @@ enum reg_id
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
 	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
-	REG_ID_HLD = 0x11, // key hold time cfg (in 10ms units) (30)
 	REG_ID_CF2 = 0x14, // config 2 (CF2_USB_KEYB_ON | CF2_USB_MOUSE_ON) (0b0111)
 
 	REG_ID_LAST,

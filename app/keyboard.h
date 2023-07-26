@@ -42,6 +42,11 @@ enum key_mod
 #define KEY_MOD_SHR		0x9C // Right Shift
 #define KEY_MOD_SYM		0x9D
 
+// Constants
+
+// How long to hold the click to get right click
+#define KEY_HLD_MS 300
+
 struct key_callback
 {
 	void (*func)(char, enum key_state);
