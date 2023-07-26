@@ -49,8 +49,6 @@ enum key_mod
 
 #define KEY_POLL_MS 10
 
-#define REPORT_MODS true // Should Alt, Sym and Shifts be reported as well
-
 #define USE_MODS true // Should Alt, Sym and Shifts modify the keys reported
 
 struct key_callback

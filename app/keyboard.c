@@ -89,23 +89,19 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 		char key = p_entry->chr;
 		switch (p_entry->mod) {
 			case KEY_MOD_ID_ALT:
-				if (REPORT_MODS)
-					key = KEY_MOD_ALT;
+				key = KEY_MOD_ALT;
 				break;
 
 			case KEY_MOD_ID_SHL:
-				if (REPORT_MODS)
-					key = KEY_MOD_SHL;
+				key = KEY_MOD_SHL;
 				break;
 
 			case KEY_MOD_ID_SHR:
-				if (REPORT_MODS)
-					key = KEY_MOD_SHR;
+				key = KEY_MOD_SHR;
 				break;
 
 			case KEY_MOD_ID_SYM:
-				if (REPORT_MODS)
-					key = KEY_MOD_SYM;
+				key = KEY_MOD_SYM;
 				break;
 
 			default:
