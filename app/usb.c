@@ -3,7 +3,6 @@
 #include "backlight.h"
 #include "keyboard.h"
 #include "touchpad.h"
-#include "reg.h"
 
 #include <hardware/irq.h>
 #include <pico/mutex.h>
@@ -147,9 +146,7 @@ void tud_vendor_rx_cb(uint8_t itf)
 	tud_vendor_n_read(itf, buff, 64);
 //	printf("%s: %02X %02X %02X\r\n", __func__, buff[0], buff[1], buff[2]);
 
-	reg_process_packet(buff[0], buff[1], self.write_buffer, &self.write_len);
-
-	tud_vendor_n_write(itf, self.write_buffer, self.write_len);
+	tud_vendor_n_write(itf, self.write_buffer, 0);
 }
 
 void tud_mount_cb(void)

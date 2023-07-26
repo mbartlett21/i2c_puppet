@@ -5,7 +5,6 @@
 #include "backlight.h"
 #include "debug.h"
 #include "keyboard.h"
-#include "reg.h"
 #include "touchpad.h"
 #include "usb.h"
 
@@ -25,8 +24,6 @@ int main(void)
 #ifndef NDEBUG
 	debug_init();
 #endif
-
-	reg_init();
 
 	backlight_init();
 

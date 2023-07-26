@@ -3,7 +3,6 @@ add_executable(i2c_puppet
 	debug.c
 	keyboard.c
 	main.c
-	reg.c
 	touchpad.c
 	usb.c
 	usb_descriptors.c

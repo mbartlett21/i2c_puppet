@@ -1,6 +1,5 @@
 #include "app_config.h"
 #include "keyboard.h"
-#include "reg.h"
 #include <stdio.h>
 
 #include <pico/stdlib.h>
