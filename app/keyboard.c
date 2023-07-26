@@ -170,9 +170,7 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 						key = p_entry->alt;
 					} else if (key >= 'A' && key <= 'Z') {
 						printf(" letter\n");
-						if (control) { // If the SYM key is held down, it's a control key
-							key -= 0x40;
-						} else if (!shift) { // lower case letter
+						if (!shift) { // lower case letter
 							key += 0x20;
 						} else {
 							// it's an uppercase letter - do nothing

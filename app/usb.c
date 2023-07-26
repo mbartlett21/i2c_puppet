@@ -18,7 +18,9 @@ static struct
 	uint8_t mouse_btn;
 
 	uint8_t write_buffer[2];
-	uint8_t write_len;
+
+	uint8_t modifiers;
+	uint8_t keycode[6];
 } self;
 
 // TODO: What about Ctrl?
@@ -44,6 +46,66 @@ static int64_t timer_task(alarm_id_t id, void *user_data)
 	return USB_TASK_INTERVAL_US;
 }
 
+// returns whether the tables were modified
+static uint8_t press_keycode(uint8_t code) {
+	uint8_t modified = false;
+	uint8_t i = 0;
+
+	if (code >= HID_KEY_CONTROL_LEFT && code <= HID_KEY_GUI_RIGHT) {
+		// Reported as modifiers
+		uint8_t modifier = 1 << (code - HID_KEY_CONTROL_LEFT);
+
+		if (!(self.modifiers & modifier)) {
+			self.modifiers |= modifier;
+			modified = true;
+		}
+	} else {
+		// Don't double-press keys
+		for (i = 0; i < 6; i ++) {
+			if (self.keycode[i] == code) {
+				// Already pressed; ignore
+				return false;
+			}
+		}
+
+		// Find an empty keycode slot
+		for (i = 0; i < 6; i ++) {
+			if (!self.keycode[i]) {
+				// Add it to this one
+				self.keycode[i] = code;
+				modified = true;
+				break;
+			}
+		}
+	}
+
+	return modified;
+}
+
+// returns whether the tables were modified
+static uint8_t release_keycode(uint8_t code) {
+	uint8_t modified = false;
+
+	if (code >= HID_KEY_CONTROL_LEFT && code <= HID_KEY_GUI_RIGHT) {
+		// Reported as modifiers
+		uint8_t modifier = 1 << (code - HID_KEY_CONTROL_LEFT);
+
+		if (self.modifiers & modifier) {
+			self.modifiers &= ~modifier;
+			modified = true;
+		}
+	} else {
+		for (uint8_t i = 0; i < 6; i ++) {
+			if (self.keycode[i] == code) {
+				self.keycode[i] = 0;
+				modified = true;
+			}
+		}
+	}
+
+	return modified;
+}
+
 static void key_cb(char key, enum key_state state)
 {
 	// Don't send mods over USB
@@ -63,28 +125,22 @@ static void key_cb(char key, enum key_state state)
 		conv_table[KEY_JOY_RIGHT][1]	= HID_KEY_ARROW_RIGHT;
 		conv_table[KEY_MOD_SYM][1]		= HID_KEY_CONTROL_LEFT;
 
-		uint8_t keycode[6] = { 0 };
-		uint8_t modifier   = 0;
+		uint8_t modified = false;
 
 		if (state == KEY_STATE_PRESSED) {
-			printf(" conv_table[%d][0,1]=%d,%d  ",key,  conv_table[(int)key][0], conv_table[(int)key][1]); // bgb
 			if (conv_table[(int)key][0])
-				modifier = KEYBOARD_MODIFIER_LEFTSHIFT;
-			else if (key < 0x20) { // it's a control key
-				if ((key == '\n') || (key == '\b')) {
-					// \n and \b are handled using the conv_table below using the HID equivalent.
-				} else {
-					// convert control key, i.e. [Control-A] converts to [modifier=control, key=A]
-					modifier = KEYBOARD_MODIFIER_RIGHTCTRL;
-					key = key + 0x40; 
-				}
-			}
+				modified |= press_keycode(HID_KEY_SHIFT_LEFT);
 
-			keycode[0] = conv_table[(int)key][1];
-		}
+			modified |= press_keycode(conv_table[(int)key][1]);
+		} else if (state == KEY_STATE_RELEASED) {
+			modified |= release_keycode(conv_table[(int)key][1]);
 
-		if (state != KEY_STATE_HOLD)
-			tud_hid_n_keyboard_report(USB_ITF_KEYBOARD, 0, modifier, keycode);
+			if (conv_table[(int)key][0])
+				modified |= release_keycode(HID_KEY_SHIFT_LEFT);
+		} // Ignore KEY_STATE_HOLD
+
+		if (modified)
+			tud_hid_n_keyboard_report(USB_ITF_KEYBOARD, 0, self.modifiers, self.keycode);
 	}
 
 	if (tud_hid_n_ready(USB_ITF_MOUSE)) {
