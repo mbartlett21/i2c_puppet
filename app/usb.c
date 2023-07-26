@@ -54,7 +54,7 @@ static void key_cb(char key, enum key_state state)
 		(key == KEY_MOD_SYM))
 		return;
 
-	if (tud_hid_n_ready(USB_ITF_KEYBOARD) && reg_is_bit_set(REG_ID_CF2, CF2_USB_KEYB_ON)) {
+	if (tud_hid_n_ready(USB_ITF_KEYBOARD)) {
 		// conv_table needs to be 256 entries long because the special keys are in range 128-256 (0x80 - 0xFF)
 		uint8_t conv_table[256][2]		= { HID_ASCII_TO_KEYCODE };
 		conv_table['\n'][1]				= HID_KEY_ENTER; // Fixup: Enter instead of Return
@@ -88,7 +88,7 @@ static void key_cb(char key, enum key_state state)
 			tud_hid_n_keyboard_report(USB_ITF_KEYBOARD, 0, modifier, keycode);
 	}
 
-	if (tud_hid_n_ready(USB_ITF_MOUSE) && reg_is_bit_set(REG_ID_CF2, CF2_USB_MOUSE_ON)) {
+	if (tud_hid_n_ready(USB_ITF_MOUSE)) {
 		if (key == KEY_JOY_CENTER) {
 			if (state == KEY_STATE_PRESSED) {
 				self.mouse_btn = MOUSE_BUTTON_LEFT;
@@ -108,7 +108,7 @@ static struct key_callback key_callback = { .func = key_cb };
 
 static void touch_cb(int8_t x, int8_t y)
 {
-	if (!tud_hid_n_ready(USB_ITF_MOUSE) || !reg_is_bit_set(REG_ID_CF2, CF2_USB_MOUSE_ON))
+	if (!tud_hid_n_ready(USB_ITF_MOUSE))
 		return;
 
 	self.mouse_moved = true;
