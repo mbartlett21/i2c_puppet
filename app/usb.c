@@ -49,8 +49,7 @@ static void key_cb(char key, enum key_state state)
 	// Don't send mods over USB
 	if ((key == KEY_MOD_SHL) ||
 		(key == KEY_MOD_SHR) ||
-		(key == KEY_MOD_ALT) ||
-		(key == KEY_MOD_SYM))
+		(key == KEY_MOD_ALT))
 		return;
 
 	if (tud_hid_n_ready(USB_ITF_KEYBOARD)) {
@@ -62,6 +61,7 @@ static void key_cb(char key, enum key_state state)
 		conv_table[KEY_JOY_DOWN][1]		= HID_KEY_ARROW_DOWN;
 		conv_table[KEY_JOY_LEFT][1]		= HID_KEY_ARROW_LEFT;
 		conv_table[KEY_JOY_RIGHT][1]	= HID_KEY_ARROW_RIGHT;
+		conv_table[KEY_MOD_SYM][1]		= HID_KEY_CONTROL_LEFT;
 
 		uint8_t keycode[6] = { 0 };
 		uint8_t modifier   = 0;
