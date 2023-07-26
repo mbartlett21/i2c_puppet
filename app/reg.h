@@ -7,7 +7,6 @@ enum reg_id
 {
 	REG_ID_BKL = 0x05, // backlight (255)
 	REG_ID_DEB = 0x06, // key debounce cfg (ms) (not implemented) (10)
-	REG_ID_FRQ = 0x07, // key poll freq cfg (ms) (10)
 
 	REG_ID_LAST,
 };

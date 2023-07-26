@@ -77,5 +77,4 @@ void reg_init(void)
 {
 	reg_set_value(REG_ID_BKL, 255);
 	reg_set_value(REG_ID_DEB, 10);
-	reg_set_value(REG_ID_FRQ, 10);	// ms
 }

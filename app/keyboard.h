@@ -47,6 +47,8 @@ enum key_mod
 // How long to hold the click to get right click
 #define KEY_HLD_MS 300
 
+#define KEY_POLL_MS 10
+
 #define REPORT_MODS true // Should Alt, Sym and Shifts be reported as well
 
 #define USE_MODS true // Should Alt, Sym and Shifts modify the keys reported
