@@ -31,7 +31,6 @@
 
 #define SWIPE_COOLDOWN_TIME_MS	20 // time to wait before generating a new swipe event
 #define SWIPE_RELEASE_DELAY_MS	10  // time to wait before sending key release event
-#define MOTION_IS_SWIPE(i, j)	(((i >= 15) || (i <= -15)) && ((j >= -5) && (j <= 5)))
 
 static i2c_inst_t *i2c_instances[2] = { i2c0, i2c1 };
 
@@ -88,25 +87,26 @@ void touchpad_gpio_irq(uint gpio, uint32_t events)
 		y = ((y < 127) ? y : (y - 256));
 
 		if (keyboard_is_mod_on(KEY_MOD_ID_ALT)) {
-			self.xa += x;
-			self.ya += y;
+			if ((x > 0 && self.xa < 500) || (x < 0 && self.xa > -500))
+				self.xa += x;
+			if ((y > 0 && self.ya < 500) || (y < 0 && self.ya > -500))
+				self.ya += y;
+
 			if (to_ms_since_boot(get_absolute_time()) - self.last_swipe_time > SWIPE_COOLDOWN_TIME_MS) {
 				char key = '\0';
-				if (self.ya < -20) {
+				if (self.ya < -25) {
 					key = KEY_JOY_UP;
-					self.ya += 20;
-				} else if (self.ya > 20) {
+				} else if (self.ya > 25) {
 					key = KEY_JOY_DOWN;
-					self.ya -= 20;
-				} else if (self.xa < -20) {
+				} else if (self.xa < -25) {
 					key = KEY_JOY_LEFT;
-					self.xa += 20;
-				} else if (self.xa > 20) {
+				} else if (self.xa > 25) {
 					key = KEY_JOY_RIGHT;
-					self.xa -= 20;
 				}
 
 				if (key != '\0') {
+					self.xa = 0;
+					self.ya = 0;
 					keyboard_inject_event(key, KEY_STATE_PRESSED);
 
 					// we need to allow the usb a bit of time to send the press, so schedule the release after a bit
