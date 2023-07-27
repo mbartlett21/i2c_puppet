@@ -124,6 +124,7 @@ static void key_cb(char key, enum key_state state)
 		conv_table[KEY_MOD_SYM][1]		= HID_KEY_CONTROL_LEFT;
 		conv_table[KEY_MOD_SHL][1]		= HID_KEY_SHIFT_LEFT;
 		conv_table[KEY_MOD_SHR][1]		= HID_KEY_SHIFT_RIGHT;
+		conv_table[KEY_GUI][1]			= HID_KEY_GUI_LEFT;
 
 		uint8_t modified = false;
 

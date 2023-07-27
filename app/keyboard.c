@@ -127,13 +127,7 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 								}
 								break;
 							case KEY_BTN_LEFT2:
-								if (alt) {
-									key = ']';
-								} else if (shift) {
-									key = '[';
-								} else {
-									key = '%';
-								}
+								key = KEY_GUI;
 								break;
 							case KEY_BTN_RIGHT1:
 								if (alt) {
