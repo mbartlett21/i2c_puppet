@@ -122,8 +122,6 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 									key = '>';
 								} else if (shift) {
 									key = '<';
-								} else if (control) {
-									key = 'x';
 								} else {
 									key =0x1B; // ESC
 								}
@@ -133,8 +131,6 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 									key = ']';
 								} else if (shift) {
 									key = '[';
-								} else if (control) {
-									key ='x';
 								} else {
 									key = '%';
 								}
@@ -144,8 +140,6 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 									key = '}';
 								} else if (shift) {
 									key = '{';
-								} else if (control) {
-									key = 'x';
 								} else {
 									key = '=';
 								}
@@ -155,8 +149,6 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 									key = '&';
 								} else if (shift) {
 									key = '^';
-								} else if (control) {
-									key = 'x'; // TODO
 								} else {
 									key = '\\';
 								}
@@ -170,11 +162,7 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 						key = p_entry->alt;
 					} else if (key >= 'A' && key <= 'Z') {
 						printf(" letter\n");
-						if (!shift) { // lower case letter
-							key += 0x20;
-						} else {
-							// it's an uppercase letter - do nothing
-						}
+						key += 0x20; // base it on lowercase
 					}
 				}
 
