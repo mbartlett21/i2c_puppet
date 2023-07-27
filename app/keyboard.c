@@ -71,9 +71,6 @@ static struct
 
 	bool capslock_changed;
 	bool capslock;
-
-	bool numlock_changed;
-	bool numlock;
 } self;
 
 static void transition_to(struct list_item * const p_item, const enum key_state next_state)
@@ -108,7 +105,7 @@ static void transition_to(struct list_item * const p_item, const enum key_state 
 			{
 				if (USE_MODS) {
 					const bool shift = (self.mods[KEY_MOD_ID_SHL] || self.mods[KEY_MOD_ID_SHR]) | self.capslock;
-					const bool alt = self.mods[KEY_MOD_ID_ALT] | self.numlock;
+					const bool alt = self.mods[KEY_MOD_ID_ALT];
 					if (key == KEY_BTN_RIGHT1) {
 						if (alt) {
 							key = '>';
@@ -152,30 +149,19 @@ static void next_item_state(struct list_item * const p_item, const bool pressed)
 					self.capslock_changed = true;
 				}
 
-				if (!self.numlock_changed && self.mods[KEY_MOD_ID_SHL] && self.mods[KEY_MOD_ID_ALT]) {
-					self.numlock = true;
-					self.numlock_changed = true;
-				}
-
 				if (!self.capslock_changed && (self.mods[KEY_MOD_ID_SHL] || self.mods[KEY_MOD_ID_SHR])) {
 					self.capslock = false;
 					self.capslock_changed = true;
 				}
 
-				if (!self.numlock_changed && (self.mods[KEY_MOD_ID_SHL] || self.mods[KEY_MOD_ID_SHR])) {
-					self.numlock = false;
-					self.numlock_changed = true;
-				}
-
 				if (!self.mods[KEY_MOD_ID_ALT]) {
 					self.capslock_changed = false;
-					self.numlock_changed = false;
 				}
 
-				if (self.lock_callbacks && (self.capslock_changed || self.numlock_changed)) {
+				if (self.lock_callbacks && self.capslock_changed) {
 					struct key_lock_callback *cb = self.lock_callbacks;
 					while (cb) {
-						cb->func(self.capslock_changed, self.numlock_changed);
+						cb->func(self.capslock_changed);
 
 						cb = cb->next;
 					}
@@ -371,11 +357,6 @@ void keyboard_add_lock_callback(struct key_lock_callback *callback)
 bool keyboard_get_capslock(void)
 {
 	return self.capslock;
-}
-
-bool keyboard_get_numlock(void)
-{
-	return self.numlock;
 }
 
 void keyboard_init(void)

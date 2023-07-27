@@ -58,7 +58,7 @@ struct key_callback
 
 struct key_lock_callback
 {
-	void (*func)(bool, bool);
+	void (*func)(bool);
 	struct key_lock_callback *next;
 };
 
@@ -71,6 +71,5 @@ void keyboard_add_key_callback(struct key_callback *callback);
 void keyboard_add_lock_callback(struct key_lock_callback *callback);
 
 bool keyboard_get_capslock(void);
-bool keyboard_get_numlock(void);
 
 void keyboard_init(void);
