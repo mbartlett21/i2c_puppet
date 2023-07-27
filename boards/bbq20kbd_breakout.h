@@ -40,7 +40,7 @@
 #define PINS_BTNS \
 	10,
 #define BTN_KEYS \
-	{ KEY_BTN_RIGHT2 },
+	{ '\\', ']' },
 
 #define PICO_DEFAULT_UART			1
 #define PICO_DEFAULT_UART_TX_PIN	20

@@ -28,14 +28,11 @@ enum key_mod
 #define KEY_JOY_LEFT	0x83
 #define KEY_JOY_RIGHT	0x84
 #define KEY_JOY_CENTER	0x85
-#define KEY_BTN_LEFT1	0x86
 #define KEY_BTN_RIGHT1	0x87
 // 0x08 - BACKSPACE
 // 0x09 - TAB
 // 0x0A - NEW LINE
 // 0x0D - CARRIAGE RETURN
-#define KEY_BTN_LEFT2	0x91
-#define KEY_BTN_RIGHT2	0x92
 
 #define KEY_GUI			0x93
 
